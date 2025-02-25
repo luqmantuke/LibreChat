@@ -1,4 +1,4 @@
-# v0.7.7-rc1
+# v0.7.7-rc1 - Modified for Cloud Run
 
 # Base node image
 FROM node:20-alpine AS node
@@ -28,14 +28,14 @@ RUN \
 
 RUN mkdir -p /app/client/public/images /app/api/logs
 
-# Node API setup
-EXPOSE 3080
+# Cloud Run specific configuration
+EXPOSE 8080
 ENV HOST=0.0.0.0
-CMD ["npm", "run", "backend"]
+ENV PORT=8080
 
-# Optional: for client with nginx routing
-# FROM nginx:stable-alpine AS nginx-client
-# WORKDIR /usr/share/nginx/html
-# COPY --from=node /app/client/dist /usr/share/nginx/html
-# COPY client/nginx.conf /etc/nginx/conf.d/default.conf
-# ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# Add a healthcheck
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/api/health || exit 1
+
+# Start the backend server
+CMD ["npm", "run", "backend"]
