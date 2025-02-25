@@ -31,7 +31,7 @@ RUN mkdir -p /app/client/public/images /app/api/logs
 # Cloud Run specific configuration
 EXPOSE 3080
 ENV HOST=0.0.0.0
-ENV PORT=3080
+
 
 # Add a healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
