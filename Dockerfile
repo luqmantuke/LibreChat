@@ -19,6 +19,8 @@ COPY --chown=node:node . .
 
 # List files to ensure .env and docker-compose.override.yml are present
 RUN ls -la
+RUN cp .env.example .env
+RUN ls -la
 
 # Continue with setup
 RUN mkdir -p /app/client/public/images /app/api/logs && \
