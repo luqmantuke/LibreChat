@@ -16,9 +16,6 @@ USER node
 # Copy project files
 COPY --chown=node:node . .
 
-# Download .env and docker-compose.override.yml from provided URLs
-RUN curl -o .env https://res.cloudinary.com/msominet/raw/upload/v1740485555/.env && \
-    curl -o docker-compose.override.yml https://res.cloudinary.com/msominet/raw/upload/v1740485554/docker-compose.override.yml
 
 # List files to ensure .env and docker-compose.override.yml are present
 RUN ls -la
