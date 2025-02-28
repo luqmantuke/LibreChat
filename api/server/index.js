@@ -128,6 +128,8 @@ const startServer = async () => {
   });
 
   app.listen(port, host, () => {
+    console.log('Environment:', process.env);
+
     if (host == '0.0.0.0') {
       logger.info(
         `Server listening on all interfaces at port ${port}. Use http://localhost:${port} to access it`,
