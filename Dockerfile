@@ -30,9 +30,9 @@ RUN mkdir -p /app/client/public/images /app/api/logs && \
     npm prune --production && \
     npm cache clean --force
 
-# Expose the port the app runs on and set environment variables
-EXPOSE 3080
-ENV PORT=3080
+# # Expose the port the app runs on and set environment variables
+# EXPOSE 3080
+# ENV PORT=3080  
 ENV HOST=0.0.0.0
 
 # Start the backend server
