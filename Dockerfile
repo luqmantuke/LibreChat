@@ -1,9 +1,7 @@
 # v0.7.7-rc1 - Modified for Cloud Run
-
-# Base node image
 FROM node:20-alpine AS node
 
-# Install curl to fetch .env and docker-compose files
+# Install curl (optional if no longer fetching .env)
 RUN apk --no-cache add curl
 
 # Set up working directory and permissions
@@ -16,13 +14,8 @@ USER node
 # Copy project files
 COPY --chown=node:node . .
 
-
-# List files to ensure .env and docker-compose.override.yml are present
-RUN ls -la
-
-# Continue with setup
-RUN mkdir -p /app/client/public/images /app/api/logs && \
-    npm config set fetch-retry-maxtimeout 600000 && \
+# Install dependencies and build frontend
+RUN npm config set fetch-retry-maxtimeout 600000 && \
     npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 15000 && \
     npm install --no-audit && \
@@ -30,9 +23,12 @@ RUN mkdir -p /app/client/public/images /app/api/logs && \
     npm prune --production && \
     npm cache clean --force
 
-# # Expose the port the app runs on and set environment variables
+# Create necessary directories
+RUN mkdir -p /app/client/public/images /app/api/logs
+
+# Expose port and set environment variables
 EXPOSE 3080
-ENV PORT=3080  
+ENV PORT=3080
 ENV HOST=0.0.0.0
 
 # Start the backend server
