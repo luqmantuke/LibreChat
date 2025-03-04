@@ -7,7 +7,6 @@ RUN ls -la
 # Set up working directory and permissions
 RUN mkdir -p /app && chown node:node /app
 RUN ls -la
-RUN cp .env.example /app/.env
 WORKDIR /app
 
 # Switch to non-root user for security
@@ -16,6 +15,7 @@ USER node
 # Copy project files
 COPY --chown=node:node . .
 
+RUN echo "PORT=3080" > .env
 # Install dependencies and build frontend
 RUN npm config set fetch-retry-maxtimeout 600000 && \
     npm config set fetch-retries 5 && \
