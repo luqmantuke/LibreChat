@@ -7,7 +7,7 @@ RUN ls -la
 # Set up working directory and permissions
 RUN mkdir -p /app && chown node:node /app
 RUN ls -la
-cp .env.example /app/.env
+RUN cp .env.example /app/.env
 WORKDIR /app
 
 # Switch to non-root user for security
