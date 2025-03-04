@@ -3,9 +3,11 @@ FROM node:20-alpine AS node
 
 # Install curl (optional if no longer fetching .env)
 RUN apk --no-cache add curl
-
+RUN ls -la
 # Set up working directory and permissions
 RUN mkdir -p /app && chown node:node /app
+RUN ls -la
+cp .env.example /app/.env
 WORKDIR /app
 
 # Switch to non-root user for security
